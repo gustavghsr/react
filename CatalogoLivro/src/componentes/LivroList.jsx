@@ -17,6 +17,9 @@ export default function LivroList() {
         setLivros(resposta.data)
     }
 
+    
+
+
     return (
         <div className="container card p-0 mt-5">
             <div className="card-header text-center">
@@ -49,7 +52,8 @@ export default function LivroList() {
                                         Editar
                                         </Link>
                                         
-                                        <button className="btn btn-sm btn-danger">
+                                        <button className="btn btn-sm btn-danger"
+                                        onClick={deletar}>
                                         Excluir
                                         </button>
                                     </div>

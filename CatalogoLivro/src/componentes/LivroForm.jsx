@@ -13,6 +13,19 @@ export default function LivroForm() {
     // Hook para navegação programática
     const navigate = useNavigate();
 
+    //leitura dos dados para edição 
+    useEffect(() =>{
+        if(id){
+            api.get(`/livros/${id}`)
+            .then((resposta) =>{
+                setTitulo(resposta.data.titulo)
+                setPaginas(resposta.data.paginas)
+                setCategoria(resposta.data.categorias)
+                setDescricao(resposta.data.descricao)
+            })
+        }
+    }, [id])
+
     // salvar os dados
     const salvar = async (e) => {
         //desativa o comportamento padrão do navegador

@@ -1,32 +1,27 @@
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom"
-import ListaContatos from "./pages/ListaContatos"
-import Formulario from "./pages/Formulario"
+import { BrowserRouter, Router, Routes, Route, Link } from "react-router-dom";
+import ListaContatos from "./pages/ListaContatos";
+import Formulario from "./pages/Formulario";
+import Menu from './pages/menu'
 
 
-export default function App(){
+
+function App(){
 
   //criar a estrutura de rotas de navegação
 
-  return(
-    <Router>
-      <div className="container pt-3">
-        
-        <nav className="text-center">
-          <Link to="/" className="btn btn-outline-secondary btn-sm">Lista Contatos</Link>
-          <Link to="/formulario" className="btn btn-outline-secondary btn-sm">Formulário</Link>
-        </nav>
-
-
+  return (
+    <BrowserRouter>
+      <Menu />
         <Routes>
-          <Route path="/" element={<ListaContatos/>} />
-          <Route path="/formulario" element={<Formulario/>} />
+          <Route path="/" element={<ListaContatos />}></Route>
+          <Route path="/novo" element={<Formulario />}></Route>
+          <Route path="/editar/:id" element={<Formulario />}></Route>
         </Routes>
-
-      </div>
-    </Router>
+    </BrowserRouter>
   )
 }
  
+export default App
 
 
 
