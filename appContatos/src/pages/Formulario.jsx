@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import api from "../services/api";
+import { MaskedInput } from "react-maskara"
 
 export default function LivroForm() {
     const [nome, setNome] = useState("");
@@ -19,7 +20,7 @@ export default function LivroForm() {
                 .then((resposta) => {
                     setNome(resposta.data.nome)
                     setWhatsapp(resposta.data.whatsapp)
-                    setEmail(resposta.data.categorias)
+                    setEmail(resposta.data.email)
                 })
         }
     }, [id])
@@ -33,8 +34,11 @@ export default function LivroForm() {
         const dados = { nome, whatsapp, email }
 
         //envia o objeto para o back end pelo método post (criar)
-        await api.post("/contatos", dados)
-
+        if (id) {
+            await api.put(`/contatos/${id}`, dados)
+        } else {
+            await api.post("/contatos", dados)
+        }
         //redireciona o usuário para a rota principal (listagem de livros)
         navigate("/")
     }
@@ -61,12 +65,15 @@ export default function LivroForm() {
                     <div className="row mb-3">
                         <div className="col-md-6">
                             <label className="form-label">WhatsApp:</label>
-                            <input
-                                type="text"
+                            <MaskedInput
+                                mask="(99) 99999-9999"
+                                id="whatsapp"
+                                name="whatsapp"
                                 className="form-control"
+                                type="tel"
+                                placeholder="(99) 99999-9999"
                                 value={whatsapp}
                                 onChange={(e) => setWhatsapp(e.target.value)}
-                                required
                             />
                         </div>
 
@@ -76,7 +83,6 @@ export default function LivroForm() {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 className="form-control"
-                                
                             />
                         </div>
                     </div>

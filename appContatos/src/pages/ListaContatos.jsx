@@ -2,7 +2,6 @@ import { useEffect, useState } from "react"
 import api from "../services/api"
 import { Link } from "react-router-dom"
 
-
 export default function ListaContatos() {
 
     const [contatos, setContatos] = useState([])
@@ -16,15 +15,13 @@ export default function ListaContatos() {
         setContatos(resposta.data)
     }
 
-
-     const deletar = async (id) => {
-        if(id){
+    async function deletar(id){
+        if (window.confirm("Quer deletar?")) {
             await api.delete(`/contatos/${id}`)
         }
-        carregarContatos()
+        carregarDados()
     }
 
-    
     return (
         <div className="container card p-0 mt-5">
             <div className="card-header text-center">
@@ -38,28 +35,26 @@ export default function ListaContatos() {
                             <th>Nome</th>
                             <th>WhatsApp</th>
                             <th>E-mail</th>
+                            <th>Ações</th>
                         </tr>
-
                     </thead>
-                        {contatos.map((contatos) => (
-                            <tr key={contatos.id}>
-                                <td>{contatos.nome}</td>
-                                <td>{contatos.whatsapp}</td>
-                                <td>{contatos.email}</td>
+                        {contatos.map((contato) => (
+                            <tr key={contato.id}>
+                                <td>{contato.nome}</td>
+                                <td>{contato.whatsapp}</td>
+                                <td>{contato.email}</td>
                                 <td>
                                     <div className="btn-group">
-                                         <Link className="btn btn-sm btn-primary me-2" to={`/editar/${contatos.id}`}>Editar</Link>
+                                         <Link className="btn btn-sm btn-primary me-2" to={`/editar/${contato.id}`}>Editar</Link>
                                           
-                                        <button className="btn btn-sm btn-danger me-2">Excluir</button>
+                                        <button className="btn btn-sm btn-danger me-2" onClick={() => deletar(contato.id)}>Excluir</button>
 
-                                        <button className="btn btn- sm btn-warning">Ordenar</button>
                                     </div>
                                 </td>
                             </tr>
 
                         ))}
                     <tbody >
-
 
                     </tbody>
                 </table>
